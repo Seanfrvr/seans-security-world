@@ -7,5 +7,4 @@
   <path d="M177 232c28-16 56-16 80-5m1 0c28-11 56-11 80 5" fill="none" stroke="#15161e" stroke-width="10" stroke-linecap="round"/><path d="M188 260c22-16 44-16 64 0-20 18-44 18-64 0zm73 0c22-16 44-16 64 0-20 18-44 18-64 0z" fill="#fffdf7" stroke="#15161e" stroke-width="8"/>
   <ellipse cx="220" cy="262" rx="8" ry="11" fill="#171a24"/><ellipse cx="293" cy="262" rx="8" ry="11" fill="#171a24"/><ellipse cx="257" cy="287" rx="12" ry="10" fill="#f2646a" stroke="#15161e" stroke-width="7"/>
   <path d="M186 316c21 26 46 39 71 39 27 0 52-13 73-39-13 4-28 7-42 7-13 0-20 13-31 13-10 0-18-13-32-13-13 0-26-3-39-7z" fill="#2a2025" stroke="#15161e" stroke-width="9" stroke-linejoin="round"/><path d="M194 317c20 18 39 26 63 26 23 0 42-8 63-26" fill="none" stroke="#fff5ef" stroke-width="7" stroke-linecap="round"/>
-  <circle cx="384" cy="121" r="38" fill="#fff6cf" stroke="#15121a" stroke-width="8"/><path d="M384 94c-16 0-28 12-28 28 0 10 5 17 11 23 6 5 7 10 7 15h19c0-7 2-12 8-17 6-6 11-12 11-22 0-16-12-27-28-27z" fill="#ffd45e" stroke="#15121a" stroke-width="7"/>
 </svg>
