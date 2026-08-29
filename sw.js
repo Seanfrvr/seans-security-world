@@ -1,4 +1,4 @@
-const CACHE='seans-security-lab-cupboss-headonly-v2';
+const CACHE='seans-security-lab-cupboss-examspacing-v4';
 const CORE=['./','./index.html','./manifest.webmanifest','./app-icon.svg'];
 self.addEventListener('install',event=>{
   event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(CORE)));

@@ -209,6 +209,131 @@ body.dark .kd-bulb{display:none} body.dark .kd-moon{display:block}
 .kd-head{width:82px;height:76px}
 .kd-bob{transform-origin:50% 62%}
 
+
+/* ==========================================================
+   MOBILE UX FINISH — tools sheet + mock exam spacing
+   Desktop architecture stays intact.
+   ========================================================== */
+/* Make the desktop tools drawer unmistakably separate from the page. */
+.side{
+  background:var(--paper)!important;
+  isolation:isolate;
+  z-index:520!important;
+  box-shadow:0 30px 90px rgba(10,16,38,.34),0 0 0 1px rgba(68,96,190,.08)!important;
+}
+.drawer-scrim{z-index:500!important;background:rgba(12,17,35,.38)!important;backdrop-filter:blur(5px)!important}
+body.dark .drawer-scrim{background:rgba(0,0,0,.62)!important}
+body.tools-open{overflow:hidden}
+
+@media(max-width:760px){
+  /* Proper phone bottom sheet instead of a narrow desktop drawer. */
+  .side{
+    left:0!important;
+    right:0!important;
+    top:auto!important;
+    bottom:0!important;
+    width:100%!important;
+    height:min(82dvh,760px)!important;
+    max-height:calc(100dvh - 14px)!important;
+    border-radius:24px 24px 0 0!important;
+    border-left:0!important;
+    border-right:0!important;
+    border-bottom:0!important;
+    transform:translateY(calc(100% + 28px))!important;
+    transition:transform .25s cubic-bezier(.2,.8,.2,1)!important;
+    overflow:auto!important;
+    overscroll-behavior:contain;
+    -webkit-overflow-scrolling:touch;
+    padding-bottom:max(18px,env(safe-area-inset-bottom))!important;
+  }
+  .tools-open .side{transform:translateY(0)!important}
+  .tools-head{
+    position:sticky!important;
+    top:0!important;
+    z-index:3!important;
+    background:var(--paper)!important;
+    padding:28px 20px 17px!important;
+    box-shadow:0 1px 0 var(--line)!important;
+  }
+  .tools-head:before{
+    content:"";
+    position:absolute;
+    top:9px;
+    left:50%;
+    width:46px;
+    height:4px;
+    border-radius:99px;
+    transform:translateX(-50%);
+    background:color-mix(in srgb,var(--muted) 38%,transparent);
+  }
+  .tools-head h3{font-size:22px!important}
+  .tools-head button{width:44px;height:44px;display:grid!important;place-items:center;border-radius:50%!important}
+  .tool-section{padding:20px!important}
+  .fine-print{padding:2px 20px 24px!important}
+
+  /* The global phone header hides .focus-control; turn it back on inside Tools. */
+  #toolsDrawer .focus-control{
+    display:flex!important;
+    min-width:0!important;
+    width:100%!important;
+  }
+  #toolsDrawer .focus-tool-row{
+    grid-template-columns:minmax(0,1fr) auto!important;
+    gap:14px!important;
+    align-items:stretch!important;
+  }
+  #toolsDrawer .focus-tool-row>.small-btn{min-width:78px!important;min-height:52px!important}
+  #toolsDrawer select,#toolsDrawer .small-btn{min-height:48px!important}
+  #toolsDrawer .filter-grid{gap:10px!important}
+  #toolsDrawer .obj-list{max-height:none!important;overflow:visible!important}
+  #toolsDrawer .obj{padding:12px 10px!important}
+  #toolsDrawer .drawer-session-grid{gap:16px!important;margin:14px 0 17px!important}
+
+  /* Mock cards: remove the auto-spacer and turn actions into a natural phone flow. */
+  .exam-home{gap:16px!important}
+  .exam-card{
+    min-height:0!important;
+    padding:22px 20px 20px!important;
+  }
+  .exam-card .micro-label{margin-bottom:44px!important}
+  .exam-letter{
+    position:absolute!important;
+    top:25px!important;
+    right:18px!important;
+    margin:0!important;
+    font-size:88px!important;
+    opacity:.07!important;
+    pointer-events:none!important;
+  }
+  .exam-card h3{font-size:30px!important;margin:0 0 12px!important}
+  .exam-card p{margin:0 0 15px!important;line-height:1.55!important}
+  .exam-spec{margin:0 0 14px!important;gap:6px!important}
+  .exam-spec span{padding:6px 8px!important}
+  .exam-card-status{
+    margin:4px 0 0!important;
+    padding:13px 0 0!important;
+  }
+  .exam-card .primary-btn{
+    width:100%!important;
+    min-height:48px!important;
+    margin-top:15px!important;
+    text-align:center!important;
+  }
+
+  /* A little more native-phone rhythm without altering desktop. */
+  .mobile-dock{padding-bottom:max(6px,env(safe-area-inset-bottom))!important}
+  .mobile-dock button{min-height:52px!important}
+  .view-head p{line-height:1.6!important}
+}
+
+@media(max-width:430px){
+  .side{height:min(84dvh,760px)!important}
+  .tools-head{padding-left:18px!important;padding-right:18px!important}
+  .tool-section{padding-left:18px!important;padding-right:18px!important}
+  .exam-card{padding:20px 18px 18px!important}
+  .exam-card h3{font-size:28px!important}
+}
+
 </style>
 <style id="experience-pass">
 /* Experience pass: less dashboard, more study software. */
@@ -1126,6 +1251,123 @@ body.dark .conf-list .panel-head,body.dark .weak-cards .panel-head{border-color:
 @media(prefers-reduced-motion:reduce){.sj-bob{animation:none!important}}
 </style>
 
+
+
+<style id="exam-card-final-spacing-fix">
+/* Final exam-card normalization: same frame, real breathing room, desktop + mobile. */
+.exam-home{
+  gap:20px!important;
+  align-items:stretch!important;
+}
+.exam-card,
+.exam-card:first-child,
+.exam-card:last-child,
+.exam-card.featured{
+  box-sizing:border-box!important;
+  border:1px solid color-mix(in srgb,var(--line) 88%,transparent)!important;
+  border-radius:20px!important;
+  padding:30px 28px 28px!important;
+  min-height:390px!important;
+  margin:0!important;
+  background:linear-gradient(180deg,rgba(255,255,255,.24),rgba(255,255,255,.055))!important;
+  box-shadow:0 16px 38px rgba(24,38,88,.07)!important;
+  overflow:hidden!important;
+}
+body.dark .exam-card,
+body.dark .exam-card:first-child,
+body.dark .exam-card:last-child,
+body.dark .exam-card.featured{
+  border-color:rgba(105,135,235,.20)!important;
+  background:linear-gradient(180deg,rgba(255,255,255,.025),rgba(255,255,255,.008))!important;
+  box-shadow:0 18px 42px rgba(0,0,0,.20)!important;
+}
+/* C stays visually special only through its letter/accent, not a different frame. */
+.exam-card.featured .exam-letter{color:var(--yellow)!important;opacity:.12!important}
+.exam-card .micro-label{display:block!important;margin:0 0 54px!important}
+.exam-letter{
+  top:22px!important;
+  right:24px!important;
+  font-size:108px!important;
+  opacity:.055!important;
+}
+.exam-card h3{
+  margin:0 0 18px!important;
+  font-size:31px!important;
+  line-height:1.05!important;
+}
+.exam-card p{
+  margin:0 0 20px!important;
+  line-height:1.58!important;
+}
+.exam-spec{
+  margin:0 0 24px!important;
+  gap:8px 12px!important;
+}
+.exam-spec span{
+  padding:6px 0!important;
+  margin:0!important;
+}
+.exam-card-status{
+  margin:0!important;
+  padding:17px 0 0!important;
+  border-top:1px solid color-mix(in srgb,var(--line) 88%,transparent)!important;
+}
+.exam-card .primary-btn{
+  align-self:flex-start!important;
+  width:auto!important;
+  min-width:108px!important;
+  min-height:46px!important;
+  margin-top:24px!important;
+  padding:12px 16px!important;
+}
+@media(max-width:900px){
+  .exam-home{gap:16px!important}
+  .exam-card,
+  .exam-card:first-child,
+  .exam-card:last-child,
+  .exam-card.featured{
+    padding:27px 24px 24px!important;
+    min-height:0!important;
+  }
+}
+@media(max-width:760px){
+  .exam-home{gap:16px!important}
+  .exam-card,
+  .exam-card:first-child,
+  .exam-card:last-child,
+  .exam-card.featured{
+    border:1px solid rgba(92,122,218,.20)!important;
+    border-radius:18px!important;
+    padding:24px 22px 22px!important;
+    min-height:0!important;
+  }
+  body.dark .exam-card,
+  body.dark .exam-card:first-child,
+  body.dark .exam-card:last-child,
+  body.dark .exam-card.featured{
+    border-color:rgba(105,135,235,.22)!important;
+  }
+  .exam-card .micro-label{margin-bottom:48px!important}
+  .exam-letter{top:20px!important;right:18px!important;font-size:86px!important}
+  .exam-card h3{font-size:29px!important;margin-bottom:14px!important}
+  .exam-card p{margin-bottom:18px!important}
+  .exam-spec{margin-bottom:20px!important}
+  .exam-card-status{padding-top:15px!important}
+  .exam-card .primary-btn{
+    width:100%!important;
+    min-height:50px!important;
+    margin-top:18px!important;
+    text-align:center!important;
+    justify-content:center!important;
+  }
+}
+@media(max-width:430px){
+  .exam-card,
+  .exam-card:first-child,
+  .exam-card:last-child,
+  .exam-card.featured{padding:22px 20px 20px!important}
+}
+</style>
 
 </head><body>
 <header class="studio-header">
