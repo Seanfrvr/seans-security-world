@@ -344,6 +344,258 @@ body.dark:before{
   .tab.active span{color:var(--red)!important;opacity:1!important}
 }
 </style>
+
+<style id="flashcard-efficiency-pass">
+/* Flashcard efficiency pass: all core controls stay with the card. */
+.card-footer{display:grid!important;grid-template-columns:1fr!important;gap:14px!important;align-items:stretch!important}
+.card-action-row{display:flex;align-items:stretch;gap:10px;flex-wrap:wrap}
+.card-action-row .reveal{flex:0 1 auto;min-width:210px}
+.quick-skip{border:1px solid var(--red);background:transparent;color:var(--red);border-radius:10px;padding:12px 16px;font-weight:850;transition:.15s ease}
+.quick-skip:hover{background:var(--red);color:#fff8e7;transform:translateY(-1px)}
+.quick-ratings{display:none;align-items:center;gap:8px;flex-wrap:wrap;padding-top:2px}
+.card-answer.show{margin-bottom:18px!important}
+.card-answer.show + .card-footer .quick-ratings{display:flex}
+.quick-ratings-label{font:800 8px var(--mono);letter-spacing:1.1px;color:var(--muted);margin-right:3px}
+.quick-ratings button{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:10px;padding:9px 12px;font-weight:800;min-height:42px;transition:.15s ease}
+.quick-ratings button b{width:23px;height:23px;display:grid;place-items:center;border-radius:50%;background:var(--ink);color:var(--paper);font:800 9px var(--mono)}
+.quick-ratings button:hover{border-color:var(--ink);transform:translateY(-1px)}
+.quick-ratings .rate-missed{border-color:color-mix(in srgb,var(--red) 60%,var(--line));color:var(--red)}
+.quick-ratings .rate-missed b{background:var(--red);color:white}
+.memory-rail .rating-guide{display:none!important}
+body.dark .quick-skip{border-color:var(--red);color:var(--red)}
+body.dark .quick-skip:hover{color:white}
+body.dark .quick-ratings button{background:transparent}
+@media(max-width:760px){
+ .memory-stage{min-height:0!important}
+ .card-action-row{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,.9fr);gap:8px}
+ .card-action-row .reveal,.quick-skip{width:100%;min-width:0;padding:12px 10px;font-size:11px}
+ .quick-ratings{display:none;grid-template-columns:repeat(3,1fr);gap:7px}
+ .card-answer.show{margin-bottom:12px!important}
+ .card-answer.show + .card-footer .quick-ratings{display:grid}
+ .quick-ratings-label{grid-column:1/-1;margin:0 0 1px}
+ .quick-ratings button{justify-content:center;min-width:0;padding:9px 6px;font-size:10px}
+ .quick-ratings button b{width:21px;height:21px;flex:0 0 auto}
+ .memory-rail{margin-top:10px!important}
+ .memory-rail .session-meter,.memory-rail .rail-note{margin-bottom:10px!important}
+ .shortcut-line{padding-top:8px!important}
+}
+@media(max-width:390px){
+ .card-action-row{grid-template-columns:1fr 1fr}
+ .quick-ratings button span{font-size:9px}
+}
+</style>
+<style id="max-graphics-polish">
+/* ============================================================
+   MAX GRAPHICS POLISH — visual finish only. No architecture.
+   ============================================================ */
+:root{
+  --cream:#f1e5c7;
+  --paper:#fff9ec;
+  --paper-2:#f7ecd3;
+  --line:#d7c7a7;
+  --ink:#171513;
+  --muted:#756b5e;
+  --yellow:#f0c33f;
+  --yellow-2:#ffd75a;
+  --red:#d65342;
+  --good:#5f8167;
+  --shadow-soft:0 18px 45px rgba(55,40,18,.075);
+  --shadow-card:0 26px 70px rgba(55,40,18,.105),0 2px 0 rgba(255,255,255,.68) inset;
+}
+body{
+  background:#f1e5c7!important;
+  background-image:
+    radial-gradient(900px 540px at 84% -10%,rgba(248,210,91,.15),transparent 62%),
+    radial-gradient(760px 520px at -12% 52%,rgba(214,83,66,.045),transparent 63%),
+    linear-gradient(180deg,#f6edd9 0%,#f2e6ca 48%,#eedfc1 100%)!important;
+  background-attachment:fixed!important;
+}
+body:before{
+  display:block!important;
+  content:""!important;
+  position:fixed!important;
+  inset:0!important;
+  pointer-events:none!important;
+  z-index:-2!important;
+  opacity:1!important;
+  background:
+    radial-gradient(500px 240px at 50% 0%,rgba(255,255,255,.34),transparent 72%),
+    radial-gradient(460px 320px at 88% 28%,rgba(242,200,75,.055),transparent 70%)!important;
+  background-size:auto!important;
+  mix-blend-mode:normal!important;
+}
+body.dark{
+  --cream:#0c0d0f;--paper:#141619;--paper-2:#1a1d21;--ink:#f2efe8;--muted:#96958f;--line:#303238;
+  --yellow:#ddb647;--yellow-2:#edc95c;--red:#db604f;--good:#78a282;
+  --shadow-soft:0 20px 55px rgba(0,0,0,.28);--shadow-card:0 28px 78px rgba(0,0,0,.34),0 1px 0 rgba(255,255,255,.025) inset;
+  background:#0c0d0f!important;
+  background-image:
+    radial-gradient(920px 500px at 85% -12%,rgba(221,182,71,.075),transparent 64%),
+    radial-gradient(720px 470px at -10% 50%,rgba(219,96,79,.028),transparent 63%),
+    linear-gradient(180deg,#111214 0%,#0c0d0f 56%,#090a0c 100%)!important;
+}
+body.dark:before{background:radial-gradient(520px 260px at 50% 0%,rgba(255,255,255,.018),transparent 74%)!important}
+
+/* Header: same geometry, richer finish. */
+.studio-header{position:relative}
+.studio-header:after{content:"";position:absolute;left:28px;right:28px;bottom:0;height:1px;background:linear-gradient(90deg,transparent,var(--line) 12%,var(--line) 88%,transparent);opacity:.7;pointer-events:none}
+.brand-mark b{font-weight:900;letter-spacing:-.65px;text-shadow:0 1px 0 rgba(255,255,255,.5)}
+body.dark .brand-mark b{text-shadow:0 1px 12px rgba(255,255,255,.025)}
+.brand-mark small{opacity:.9}
+.tools-btn{position:relative;overflow:hidden}
+.tools-btn:before{content:"";position:absolute;left:12px;right:12px;bottom:-1px;height:2px;background:linear-gradient(90deg,var(--yellow),var(--red));transform:scaleX(0);transform-origin:left;transition:transform .2s ease}
+.tools-btn:hover:before{transform:scaleX(1)}
+
+/* Felix gets depth without becoming a separate illustration. */
+.mascot-button{filter:drop-shadow(0 8px 12px rgba(35,26,12,.13));transition:transform .18s ease,filter .18s ease!important}
+.mascot-button:before{background:linear-gradient(145deg,#f7d85d 0%,#e5b637 100%)!important;border-color:#171513!important;box-shadow:0 0 0 1px rgba(255,255,255,.55) inset,0 10px 24px rgba(72,48,7,.13)!important;transition:box-shadow .2s ease,transform .2s ease!important}
+.mascot-button:hover{filter:drop-shadow(0 12px 16px rgba(35,26,12,.18));transform:translateY(-3px) rotate(-1deg)!important}
+.mascot-button:hover:before{box-shadow:0 0 0 1px rgba(255,255,255,.72) inset,0 13px 30px rgba(72,48,7,.18),0 0 24px rgba(240,195,63,.15)!important}
+.mascot-head{filter:drop-shadow(0 1px 0 rgba(255,255,255,.15))}
+body.dark .mascot-button{filter:drop-shadow(0 9px 18px rgba(0,0,0,.42))}
+body.dark .mascot-button:before{background:linear-gradient(145deg,#25282c,#151719)!important;border-color:#ece8df!important;box-shadow:0 0 0 1px rgba(255,255,255,.08) inset,0 12px 28px rgba(0,0,0,.42)!important}
+
+/* Tabs: same six positions, more deliberate visual hierarchy. */
+@media(min-width:761px){
+ .tabs{position:relative}
+ .tab{position:relative;overflow:hidden;padding-top:12px!important}
+ .tab:before{content:"";position:absolute;inset:auto 10px 0 0;height:36px;background:linear-gradient(180deg,transparent,rgba(240,195,63,.065));opacity:0;transition:opacity .18s ease;pointer-events:none}
+ .tab:hover:before,.tab.active:before{opacity:1}
+ .tab span{transition:opacity .18s ease,color .18s ease,transform .18s ease!important}
+ .tab b{display:inline-block;transition:transform .18s ease,color .18s ease!important}
+ .tab:hover b{transform:translateX(2px)}
+ .tab.active b{font-weight:850!important}
+ .tab.active span{transform:translateY(-1px)}
+}
+
+/* Learning Pulse: sharper instrument readout, same structure. */
+.telemetry{position:relative;background:linear-gradient(180deg,rgba(255,255,255,.11),rgba(255,255,255,0))!important}
+.telemetry:after{content:"";position:absolute;left:28px;right:28px;bottom:-1px;height:1px;background:linear-gradient(90deg,transparent,rgba(214,83,66,.22),rgba(240,195,63,.28),transparent);pointer-events:none}
+.pulse-stat b{text-shadow:0 1px 0 rgba(255,255,255,.4)}
+body.dark .pulse-stat b{text-shadow:none}
+.pulse-stat.due b{filter:drop-shadow(0 3px 7px rgba(240,195,63,.16))}
+.pulse-stat.weak b{filter:drop-shadow(0 3px 7px rgba(214,83,66,.12))}
+
+/* Main visual surfaces. */
+.mission-hero{
+  background:
+    radial-gradient(480px 320px at 14% 10%,rgba(255,255,255,.035),transparent 66%),
+    linear-gradient(145deg,#171613 0%,#11110f 58%,#0d0d0c 100%)!important;
+  box-shadow:0 34px 85px rgba(43,31,15,.16),0 1px 0 rgba(255,255,255,.045) inset!important;
+  border:1px solid rgba(255,255,255,.035)!important;
+}
+.mission-copy h3{text-shadow:0 2px 0 rgba(0,0,0,.2);text-wrap:balance}
+.mission-hero:after{box-shadow:0 0 0 8px rgba(240,195,63,.09),0 0 28px rgba(240,195,63,.34)!important}
+.mission-hero .primary-btn{background:linear-gradient(180deg,#ffd55a 0%,#efbe2d 100%)!important;border:1px solid rgba(255,255,255,.28)!important;box-shadow:0 8px 18px rgba(0,0,0,.18),0 1px 0 rgba(255,255,255,.62) inset!important}
+.mission-hero .primary-btn:hover{background:linear-gradient(180deg,#ffe172 0%,#f3c438 100%)!important;transform:translateY(-2px)!important}
+.readiness-ring{filter:drop-shadow(0 12px 22px rgba(0,0,0,.16));box-shadow:0 0 0 1px rgba(255,255,255,.035) inset}
+.coach-note{background:linear-gradient(180deg,rgba(255,255,255,.14),rgba(255,255,255,.035))!important}
+body.dark .coach-note{background:linear-gradient(180deg,rgba(255,255,255,.018),transparent)!important}
+
+/* Cards and panels get premium depth, no added boxes. */
+.memory-stage{background:linear-gradient(145deg,rgba(255,253,247,.96),rgba(255,248,234,.94))!important;border-color:color-mix(in srgb,var(--line) 84%,white)!important;box-shadow:var(--shadow-card)!important;backdrop-filter:blur(8px)}
+body.dark .memory-stage{background:linear-gradient(145deg,#17191c,#111315)!important;border-color:#32353a!important;box-shadow:var(--shadow-card)!important}
+.memory-stage:after{opacity:.48!important;box-shadow:0 0 0 27px rgba(240,195,63,.025),0 0 42px rgba(240,195,63,.035)!important}
+.card-meta span,.card-topline>strong{background:rgba(255,255,255,.36)!important;box-shadow:0 1px 0 rgba(255,255,255,.5) inset}
+body.dark .card-meta span,body.dark .card-topline>strong{background:rgba(255,255,255,.018)!important;box-shadow:none}
+.card-question{font-weight:880!important;letter-spacing:-2.35px!important;text-wrap:balance;text-shadow:0 1px 0 rgba(255,255,255,.62)}
+body.dark .card-question{text-shadow:none}
+.card-answer{background:linear-gradient(135deg,#f7edd8 0%,#f3e4c7 100%)!important;border-top-color:#ddc99e!important;box-shadow:0 -8px 24px rgba(74,52,18,.035) inset!important}
+body.dark .card-answer{background:linear-gradient(135deg,#1b1e22,#17191c)!important;border-top-color:#36393e!important;box-shadow:none!important}
+.card-answer.show{animation:answerLift .3s cubic-bezier(.2,.85,.2,1)}
+@keyframes answerLift{from{filter:brightness(.98);transform:translateY(5px)}to{filter:none;transform:none}}
+.card-answer h3{letter-spacing:-.7px}
+.card-progress{height:5px!important;background:rgba(23,21,19,.075)!important;box-shadow:0 1px 0 rgba(255,255,255,.45) inset}
+.card-progress i{background:linear-gradient(90deg,var(--red) 0%,var(--yellow) 72%,var(--yellow-2) 100%)!important;box-shadow:0 0 12px rgba(240,195,63,.22);position:relative;overflow:hidden}
+.card-progress i:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent 0%,rgba(255,255,255,.7) 48%,transparent 52%);transform:translateX(-120%);animation:progressSheen 3.8s ease-in-out infinite}
+@keyframes progressSheen{55%,100%{transform:translateX(140%)}}
+body.dark .card-progress{background:#26292d!important;box-shadow:none}
+
+/* Fast flashcard controls: more obvious, still compact. */
+.card-action-row .reveal{background:linear-gradient(180deg,#24211c 0%,#12110f 100%)!important;border:1px solid #12110f!important;box-shadow:0 7px 15px rgba(22,18,13,.12),0 1px 0 rgba(255,255,255,.09) inset!important}
+.card-action-row .reveal:hover{background:linear-gradient(180deg,#343028 0%,#171513 100%)!important;transform:translateY(-2px)!important}
+.quick-skip{background:linear-gradient(180deg,rgba(214,83,66,.045),rgba(214,83,66,.015))!important;border-color:color-mix(in srgb,var(--red) 68%,var(--line))!important;box-shadow:0 1px 0 rgba(255,255,255,.5) inset!important}
+.quick-skip:hover{background:linear-gradient(180deg,#df6957,#c84839)!important;border-color:var(--red)!important;box-shadow:0 8px 16px rgba(214,83,66,.17)!important}
+.quick-ratings{padding-top:6px!important}
+.quick-ratings button{position:relative;overflow:hidden;background:linear-gradient(180deg,rgba(255,255,255,.62),rgba(255,255,255,.24))!important;box-shadow:0 4px 12px rgba(52,38,18,.045),0 1px 0 rgba(255,255,255,.7) inset!important}
+.quick-ratings button:after{content:"";position:absolute;left:0;right:0;bottom:0;height:3px;background:var(--yellow);transform:scaleX(.22);transform-origin:left;opacity:.55;transition:transform .16s ease,opacity .16s ease}
+.quick-ratings button:hover:after{transform:scaleX(1);opacity:1}
+.quick-ratings .rate-missed:after{background:var(--red)}
+.quick-ratings button[data-rate="easy"]:after{background:var(--good)}
+.quick-ratings button[data-rate="good"]{border-color:color-mix(in srgb,var(--yellow) 45%,var(--line))}
+.quick-ratings button[data-rate="easy"]{border-color:color-mix(in srgb,var(--good) 45%,var(--line))}
+.quick-ratings button[data-rate="good"] b{background:var(--yellow);color:#171513}
+.quick-ratings button[data-rate="easy"] b{background:var(--good);color:white}
+.quick-ratings button:hover{transform:translateY(-2px)!important;box-shadow:0 9px 20px rgba(52,38,18,.075),0 1px 0 rgba(255,255,255,.8) inset!important}
+body.dark .quick-ratings button{background:linear-gradient(180deg,rgba(255,255,255,.025),rgba(255,255,255,.008))!important;box-shadow:0 5px 14px rgba(0,0,0,.14)!important}
+body.dark .quick-skip{box-shadow:none!important}
+
+/* Side rail reads cleaner and more premium. */
+.memory-rail{position:relative}
+.memory-rail:before{content:"";position:absolute;left:-1px;top:0;width:1px;height:84px;background:linear-gradient(var(--yellow),transparent)}
+.session-meter{background:linear-gradient(180deg,rgba(255,255,255,.12),rgba(255,255,255,0))!important;color:var(--ink)!important;box-shadow:none!important;border-radius:0!important;border-top:4px solid var(--yellow)!important;padding:18px 0 24px!important}
+.session-meter strong{color:var(--ink)!important;text-shadow:0 1px 0 rgba(255,255,255,.35)}
+.session-meter small{color:var(--muted)!important}
+body.dark .session-meter{background:linear-gradient(180deg,rgba(255,255,255,.018),transparent)!important;box-shadow:none!important}
+body.dark .session-meter strong{text-shadow:none}
+.rail-note{position:relative}
+.rail-note:after{content:"";position:absolute;left:0;bottom:-1px;width:42px;height:2px;background:var(--yellow);opacity:.7}
+
+/* Quiz / PBQ / exams: visual polish only. */
+.quiz-stage,.conf-list,.weak-cards,.pbq-card,.exam-card,.exam-question,.exam-results{box-shadow:var(--shadow-soft)}
+.quiz-stage,.conf-list,.weak-cards,.pbq-card,.exam-card{border-color:color-mix(in srgb,var(--line) 88%,white)!important}
+body.dark .quiz-stage,body.dark .conf-list,body.dark .weak-cards,body.dark .pbq-card,body.dark .exam-card{border-color:#30343a!important}
+.opt{position:relative;overflow:hidden;box-shadow:0 1px 0 rgba(255,255,255,.58) inset}
+.opt:after{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--yellow);opacity:0;transform:scaleY(.35);transition:opacity .16s ease,transform .16s ease}
+.opt:hover:not(:disabled):after{opacity:1;transform:scaleY(1)}
+.opt.correct:after{background:var(--good);opacity:1;transform:scaleY(1)}
+.opt.wrong:after{background:var(--red);opacity:1;transform:scaleY(1)}
+body.dark .opt{box-shadow:none}
+.heat i,.bar i,.pulse-track i,.intel-meter i{background:linear-gradient(90deg,var(--red),var(--yellow))!important;box-shadow:0 0 12px rgba(240,195,63,.11)}
+.exam-card{background:linear-gradient(180deg,rgba(255,255,255,.25),rgba(255,255,255,.06))!important}
+body.dark .exam-card{background:linear-gradient(180deg,rgba(255,255,255,.015),transparent)!important}
+.exam-card.featured{box-shadow:var(--shadow-soft),inset 0 0 0 2px color-mix(in srgb,var(--yellow) 65%,transparent)!important}
+
+/* Drawers / dialogs: same layout, crisper material. */
+.side,.session-debrief,.repair-sheet{background:linear-gradient(145deg,var(--paper),color-mix(in srgb,var(--paper) 91%,var(--paper-2)))!important;box-shadow:0 34px 90px rgba(36,27,15,.24),0 1px 0 rgba(255,255,255,.55) inset!important}
+body.dark .side,body.dark .session-debrief,body.dark .repair-sheet{box-shadow:0 34px 95px rgba(0,0,0,.52)!important}
+
+/* Tiny tactile details. */
+.primary-btn,.ghost-btn,.small-btn,.quick-skip,.quick-ratings button,.opt,.tab,.tools-btn{-webkit-tap-highlight-color:transparent}
+.primary-btn:active,.quick-skip:active,.quick-ratings button:active,.opt:active{transform:translateY(1px) scale(.995)!important}
+::selection{background:color-mix(in srgb,var(--yellow) 68%,white);color:#171513}
+
+@media(max-width:760px){
+ body{background-attachment:scroll!important}
+ .studio-header:after{left:16px;right:16px}
+ .telemetry:after{left:16px;right:16px}
+ .memory-stage{box-shadow:0 18px 45px rgba(55,40,18,.08),0 1px 0 rgba(255,255,255,.7) inset!important}
+ body.dark .memory-stage{box-shadow:0 20px 52px rgba(0,0,0,.28)!important}
+ .card-question{letter-spacing:-1.55px!important;text-shadow:none}
+ .card-action-row .reveal,.quick-skip{min-height:46px}
+ .quick-ratings button{min-height:45px!important}
+ .memory-rail:before{height:48px}
+ .mission-hero{box-shadow:0 22px 55px rgba(43,31,15,.13)!important}
+}
+@media(prefers-reduced-motion:reduce){
+ .card-progress i:after,.card-answer.show{animation:none!important}
+}
+</style>
+
+
+<style id="dark-reveal-contrast-fix">
+/* Surgical contrast fix: keep Reveal/Hide readable in both themes. */
+.card-action-row .reveal,
+body.dark .card-action-row .reveal{
+  color:#fff8e7!important;
+  -webkit-text-fill-color:#fff8e7!important;
+}
+.card-action-row .reveal:hover,
+body.dark .card-action-row .reveal:hover{
+  color:#fffdf7!important;
+  -webkit-text-fill-color:#fffdf7!important;
+}
+</style>
 </head><body>
 <header class="studio-header">
  <div class="brand-wrap"><div class="brand-mark"><div><b>SEAN'S SECURITY+ LAB</b><small>SY0-701 / STUDY SYSTEM</small></div></div></div>
@@ -409,12 +661,23 @@ body.dark:before{
    <div class="card-topline"><div class="card-meta"><span id="cardObj"></span><span id="cardTopic"></span></div><strong id="cardCount"></strong></div>
    <div class="card-question" id="cardQ"></div>
    <div class="card-answer" id="cardA"><span class="micro-label">ANSWER</span><h3 id="cardAnswer"></h3><p id="cardWhy"></p></div>
-   <div class="card-footer"><button class="primary-btn reveal" id="revealBtn">Reveal answer [Space]</button><div class="card-progress"><i id="cardBar"></i></div></div>
+   <div class="card-footer">
+    <div class="card-action-row">
+     <button class="primary-btn reveal" id="revealBtn">Reveal answer [Space]</button>
+     <button class="quick-skip" id="nextCardBtn" data-rate="again" title="Counts as missed and moves to the next card">Skip · mark missed →</button>
+    </div>
+    <div class="quick-ratings" aria-label="Rate your recall">
+     <span class="quick-ratings-label">DID YOU KNOW IT?</span>
+     <button data-rate="again" class="rate-missed"><b>1</b><span>Missed</span></button>
+     <button data-rate="good"><b>2</b><span>Got it</span></button>
+     <button data-rate="easy"><b>3</b><span>Easy</span></button>
+    </div>
+    <div class="card-progress"><i id="cardBar"></i></div>
+   </div>
   </section>
   <aside class="memory-rail">
    <div class="session-meter"><span class="micro-label">THIS SESSION</span><strong id="sessionReviewed">0</strong><small>cards rated</small></div>
    <div class="rail-note"><span class="micro-label">CAT'S-EYE TIP</span><p id="inkTip">Try the question before revealing it.</p></div>
-   <div class="rating-guide"><span class="micro-label">HOW IT FELT</span><div class="ratings"><button data-rate="again"><b>1</b><span>Again</span></button><button data-rate="hard"><b>2</b><span>Hard</span></button><button data-rate="good"><b>3</b><span>Good</span></button><button data-rate="easy"><b>4</b><span>Easy</span></button></div><button class="skip-btn" id="nextCardBtn">Skip this card →</button></div>
    <div class="miss-reason" id="missReason" hidden>
   <span>What tripped you up?</span>
   <div>
@@ -423,7 +686,7 @@ body.dark:before{
     <button data-miss-reason="misread">Misread it</button>
     <button data-miss-reason="unsure">Not sure</button>
   </div>
-</div><div class="shortcut-line">SPACE reveal · 1–4 rate · → skip</div>
+</div><div class="shortcut-line">SPACE reveal · 1 missed · 2 got it · 3 easy · → skip/missed</div>
   </aside>
  </div>
 </section>
@@ -565,7 +828,7 @@ function renderHistory(){const rows=S.history.slice(-6).reverse();$('historyRows
 function renderCard(){if(!cardDeck.length)return;const c=cardDeck[cardIndex%cardDeck.length],s=cardState(c.id);$('learnModeTag').textContent=learnMode;$('cardObj').textContent=c.obj;$('cardTopic').textContent=c.topic;$('cardCount').textContent=`${cardIndex+1}/${cardDeck.length}`;$('cardQ').textContent=c.q;$('cardAnswer').textContent=c.a;$('cardWhy').textContent=c.why;$('cardA').classList.remove('show');$('revealBtn').textContent='Reveal answer [Space]';$('cardBar').style.width=((cardIndex+1)/cardDeck.length*100)+'%';$('inkTip').textContent=s.rating?`Last rating: ${s.rating.toUpperCase()}. ${c.why}`:'Try it cold. '+c.why}
 function revealCard(){const a=$('cardA'),show=!a.classList.contains('show');a.classList.toggle('show',show);$('revealBtn').textContent=show?'Hide answer [Space]':'Reveal answer [Space]';if(show)$('inkTip').textContent='EXAM CUE: '+(cardDeck[cardIndex%cardDeck.length].why||'Know the distinction, not just the word.')}
 function rateCard(r){const c=cardDeck[cardIndex%cardDeck.length],s=cardState(c.id),now=Date.now();s.reviews=(s.reviews||0)+1;if(r==='again'){s.lapses=(s.lapses||0)+1;s.interval=0;s.due=now+10*60*1000}else if(r==='hard'){s.interval=Math.max(1,Math.round((s.interval||0)*1.25)||1);s.due=now+s.interval*DAY}else if(r==='good'){s.interval=s.interval?Math.max(2,Math.round(s.interval*2.1)):3;s.due=now+s.interval*DAY}else{s.interval=s.interval?Math.max(5,Math.round(s.interval*2.7)):7;s.due=now+s.interval*DAY}s.rating=r;touchActivity();save();renderStats();cardIndex=(cardIndex+1)%cardDeck.length;renderCard()}
-$('revealBtn').onclick=revealCard;document.querySelectorAll('[data-rate]').forEach(b=>b.onclick=()=>rateCard(b.dataset.rate));$('nextCardBtn').onclick=()=>{cardIndex=(cardIndex+1)%cardDeck.length;renderCard()};
+$('revealBtn').onclick=revealCard;document.querySelectorAll('[data-rate]').forEach(b=>b.onclick=()=>rateCard(b.dataset.rate));$('nextCardBtn').onclick=()=>rateCard('again');
 
 function renderQuiz(){if(!quizDeck.length)return;const q=quizDeck[quizIndex%quizDeck.length];quizAnswered=false;$('quizModeTag').textContent=quizMode;$('quizMeta').textContent=`${q.obj} // ${q.topic} // ${quizIndex+1}/${quizDeck.length}`;$('quizQ').textContent=q.q;$('quizFeedback').classList.remove('show');$('quizFeedback').textContent='';$('quizOptions').innerHTML=q.opts.map((o,i)=>`<button class="opt" data-v="${esc(o)}">${String.fromCharCode(65+i)}. ${esc(o)}</button>`).join('');document.querySelectorAll('#quizOptions .opt').forEach(b=>b.onclick=()=>answerQuiz(b,q));$('quizScore').textContent=quizSession.t?`${quizSession.c}/${quizSession.t} · ${Math.round(quizSession.c/quizSession.t*100)}%`:'No answers yet';$('quizBar').style.width=((quizIndex+1)/quizDeck.length*100)+'%'}
 function answerQuiz(btn,q){if(quizAnswered)return;quizAnswered=true;const sel=btn.dataset.v,s=quickState(q.id);quizSession.t++;document.querySelectorAll('#quizOptions .opt').forEach(b=>{b.disabled=true;if(b.dataset.v===q.correct)b.classList.add('correct')});if(sel===q.correct){btn.classList.add('correct');s.correct++;quizSession.c++;$('quizFeedback').textContent='Correct. '+q.explain}else{btn.classList.add('wrong');s.wrong++;$('quizFeedback').textContent=`Correct answer: ${q.correct}. ${q.explain}`}touchActivity();save();$('quizFeedback').classList.add('show');$('quizScore').textContent=`${quizSession.c}/${quizSession.t} · ${Math.round(quizSession.c/quizSession.t*100)}%`;renderStats()}
@@ -610,7 +873,7 @@ $('mascotBtn').onclick=()=>toggleTheme();
 $('exportBtn').onclick=()=>{const blob=new Blob([JSON.stringify(S,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='securityplus_daily_lab_progress.json';a.click();URL.revokeObjectURL(a.href)};
 $('importBtn').onclick=()=>$('importFile').click();$('importFile').onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{S=JSON.parse(r.result);save();applyTheme();renderStats();renderToday();renderConfusion();alert('Progress imported.')}catch(err){alert('That progress file could not be imported.')}};r.readAsText(f)};
 $('resetBtn').onclick=()=>{if(confirm('Reset all study progress, streaks, PBQs, and mock history?')){S=blankState();save();applyTheme();renderStats();renderToday();renderConfusion()}};
-document.addEventListener('keydown',e=>{if(e.target.matches('input,select,textarea'))return;if(currentView==='learn'){if(e.code==='Space'){e.preventDefault();revealCard()}if(e.key==='1')rateCard('again');if(e.key==='2')rateCard('hard');if(e.key==='3')rateCard('good');if(e.key==='4')rateCard('easy');if(e.key==='ArrowRight'){$('nextCardBtn').click()}}else if(currentView==='quiz'&&e.key==='ArrowRight'){nextQuiz()}});
+document.addEventListener('keydown',e=>{if(e.target.matches('input,select,textarea'))return;if(currentView==='learn'){if(e.code==='Space'){e.preventDefault();revealCard()}if(e.key==='1')rateCard('again');if(e.key==='2')rateCard('good');if(e.key==='3')rateCard('easy');if(e.key==='ArrowRight'){$('nextCardBtn').click()}}else if(currentView==='quiz'&&e.key==='ArrowRight'){nextQuiz()}});
 
 applyTheme();fillObjectives();applyFilters();renderStats();renderToday();renderConfusion();renderPBQ();
 if(S.activeExam&&confirm(`Resume unfinished Mock Exam ${S.activeExam.name}?`)){startExam(S.activeExam.name,S.activeExam)}else if(S.activeExam){S.activeExam=null;save()}
