@@ -1,5 +1,5 @@
-const CACHE='seans-security-lab-cupboss-iosfix-v5';
-const CORE=['./','./index.html','./manifest.webmanifest','./app-icon.svg'];
+const CACHE='seans-security-lab-cupboss-iconfix-v6';
+const CORE=['./','./index.html','./manifest.webmanifest','./app-icon-v2.svg'];
 self.addEventListener('install',event=>{
   event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(CORE)));
   self.skipWaiting();
