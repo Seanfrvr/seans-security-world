@@ -1369,6 +1369,70 @@ body.dark .exam-card.featured{
 }
 </style>
 
+
+
+<style id="ios-tools-stability-fix">
+/* ==========================================================
+   iOS / MOBILE TOOLS STABILITY
+   Solid compositing layer avoids old Safari transparency bugs.
+   Desktop is intentionally untouched.
+   ========================================================== */
+@media(max-width:760px){
+  /* Old Safari fallback first; modern dynamic viewport units override it. */
+  .side{
+    height:min(82vh,760px)!important;
+    max-height:calc(100vh - 14px)!important;
+    background-color:#fff8e7!important;
+    background-image:none!important;
+    backdrop-filter:none!important;
+    -webkit-backdrop-filter:none!important;
+    -webkit-overflow-scrolling:auto!important;
+    transform:translate3d(0,calc(100% + 28px),0)!important;
+    will-change:transform!important;
+    backface-visibility:hidden!important;
+    -webkit-backface-visibility:hidden!important;
+  }
+  @supports(height:100dvh){
+    .side{
+      height:min(82dvh,760px)!important;
+      max-height:calc(100dvh - 14px)!important;
+    }
+  }
+  .tools-open .side{transform:translate3d(0,0,0)!important}
+
+  /* The sticky header must use the same opaque paint layer. */
+  .tools-head{
+    background-color:#fff8e7!important;
+    background-image:none!important;
+    backdrop-filter:none!important;
+    -webkit-backdrop-filter:none!important;
+  }
+
+  /* Avoid the blur + fixed/transform compositing path that older WebKit
+     can render as see-through while the sheet is scrolled. */
+  .drawer-scrim{
+    background:rgba(12,17,35,.52)!important;
+    backdrop-filter:none!important;
+    -webkit-backdrop-filter:none!important;
+  }
+
+  body.dark .side,
+  body.dark .tools-head{
+    background-color:#111419!important;
+    background-image:none!important;
+  }
+  body.dark .drawer-scrim{background:rgba(0,0,0,.70)!important}
+
+  /* Keep sheet content in its own painted layer without changing layout. */
+  .side>.tools-head,
+  .side>.tool-section,
+  .side>.fine-print{
+    position:relative;
+    z-index:1;
+  }
+}
+</style>
+
 </head><body>
 <header class="studio-header">
  <div class="brand-wrap"><div class="brand-mark"><div><b>SEAN'S SECURITY+ LAB</b><small>SY0-701 / BOSS TRAINING</small></div></div></div>
