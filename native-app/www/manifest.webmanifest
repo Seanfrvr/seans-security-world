@@ -1,0 +1,18 @@
+{
+  "name": "Sean's Sec Lab",
+  "short_name": "Sec Lab",
+  "description": "Local-first CompTIA Security+ SY0-701 study lab",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#edf2ff",
+  "theme_color": "#111b3c",
+  "icons": [
+    {
+      "src": "app-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
