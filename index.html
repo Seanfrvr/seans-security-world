@@ -272,6 +272,78 @@ body.dark .memory-stage{box-shadow:0 30px 90px rgba(0,0,0,.25)!important}
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+
+
+<style id="surgical-background-tabs-fix">
+/* SURGICAL VISUAL FIX — background + desktop tab treatment only. */
+body{
+  background:#f1e5c7!important;
+  background-image:linear-gradient(180deg,#f5eddb 0%,#f1e5c7 52%,#eee0c4 100%)!important;
+}
+body:before{
+  display:block!important;
+  content:""!important;
+  position:fixed!important;
+  inset:0!important;
+  z-index:-2!important;
+  pointer-events:none!important;
+  opacity:1!important;
+  background:
+    radial-gradient(900px 460px at 86% -8%,rgba(242,200,75,.10),transparent 62%),
+    radial-gradient(760px 460px at -10% 48%,rgba(215,85,66,.035),transparent 64%)!important;
+  background-size:auto!important;
+  mix-blend-mode:normal!important;
+}
+body:after{display:none!important}
+body.dark{
+  background:#0d0e0f!important;
+  background-image:linear-gradient(180deg,#101113 0%,#0d0e0f 58%,#0a0b0c 100%)!important;
+}
+body.dark:before{
+  background:
+    radial-gradient(850px 430px at 86% -8%,rgba(239,198,74,.045),transparent 64%),
+    radial-gradient(680px 400px at -9% 48%,rgba(224,98,80,.022),transparent 64%)!important;
+}
+@media (min-width:761px){
+  .tabs{
+    max-width:1444px!important;
+    margin:8px auto 0!important;
+    padding:0 28px!important;
+    display:grid!important;
+    grid-template-columns:repeat(6,minmax(0,1fr))!important;
+    gap:0!important;
+    border-bottom:1px solid var(--line)!important;
+  }
+  .tab{
+    min-width:0!important;
+    border:0!important;
+    border-bottom:3px solid transparent!important;
+    border-radius:0!important;
+    background:transparent!important;
+    color:var(--muted)!important;
+    padding:11px 12px 14px 0!important;
+    text-align:left!important;
+    transition:color .16s ease,border-color .16s ease!important;
+  }
+  .tab span{
+    display:block!important;
+    margin:0 0 5px!important;
+    font:800 8px var(--mono)!important;
+    letter-spacing:1.45px!important;
+    color:var(--muted)!important;
+    opacity:.6!important;
+  }
+  .tab b{
+    font-size:12px!important;
+    font-weight:750!important;
+    letter-spacing:-.05px!important;
+  }
+  .tab:hover{color:var(--ink)!important;border-bottom-color:color-mix(in srgb,var(--ink) 24%,transparent)!important}
+  .tab.active{color:var(--ink)!important;border-bottom-color:var(--yellow)!important}
+  .tab.active span{color:var(--red)!important;opacity:1!important}
+}
+</style>
 </head><body>
 <header class="studio-header">
  <div class="brand-wrap"><div class="brand-mark"><div><b>SEAN'S SECURITY+ LAB</b><small>SY0-701 / STUDY SYSTEM</small></div></div></div>
@@ -304,11 +376,11 @@ body.dark .memory-stage{box-shadow:0 30px 90px rgba(0,0,0,.25)!important}
  <div class="pulse-stat"><span>Best mock</span><b id="bestExamStat">—</b></div>
 </section><div class="app"><div class="layout"><main class="main-stage">
 <section class="view active" id="today">
- <div class="view-head"><div><span class="kicker" id="todayKicker">TODAY / READY WHEN YOU ARE</span><h2 id="todayGreeting">Good to see you.</h2><p id="todayLead">The next useful action should be obvious. The rest can wait.</p></div><span class="mode-chip">DAILY PLAN</span></div>
+ <div class="view-head"><div><span class="kicker" id="todayKicker">TODAY / READY WHEN YOU ARE</span><h2 id="todayGreeting">Good to see you.</h2><p id="todayLead">Your next study move, based on the evidence you have built.</p></div></div>
  <div class="today-layout">
   <article class="mission-hero">
    <div class="mission-copy"><span class="micro-label" id="nextMoveLabel">YOUR NEXT MOVE</span><h3 id="nextMoveTitle">Pick up the thread.</h3><p id="missionText"></p><div class="mission-actions"><button class="primary-btn" id="dailyCardsBtn">Start 15-card drill</button><button class="ghost-btn" id="dailyQuizBtn">Run 10-question quiz</button><button class="quiet-link" id="continueLastBtn" hidden>Continue last mode →</button></div></div>
-   <div class="readiness"><div class="readiness-ring" id="readinessRing"><span id="readinessValue">0</span><small>READINESS</small></div><div class="readiness-copy"><b>Target: 80%+ consistently</b><span id="readinessReason">Use the score as direction, not decoration.</span><div class="readiness-factors" id="readinessFactors" aria-label="Readiness factors"></div></div></div>
+   <div class="readiness"><div class="readiness-ring" id="readinessRing"><span id="readinessValue">0</span><small>READINESS</small></div><div class="readiness-copy"><b>Target: 80%+ consistently</b><span id="readinessReason">Built from your actual study history.</span><div class="readiness-factors" id="readinessFactors" aria-label="Readiness factors"></div></div></div>
   </article>
   <aside class="coach-note"><span class="micro-label">STUDY NOTE</span><p id="studyNote">Recall first. Reveal second.</p><div class="daily-list" id="dailyStats"></div><div class="coach-mini-actions"><button id="weakSprintBtn">Weak-spot sprint</button><button id="surpriseQuizBtn">5-question surprise</button></div></aside>
  </div>
@@ -325,13 +397,13 @@ body.dark .memory-stage{box-shadow:0 30px 90px rgba(0,0,0,.25)!important}
   <section class="history"><div class="panel-head"><div><span class="micro-label">LAST ATTEMPTS</span><h3>Mock history</h3></div><button class="text-link" data-jump="exams">Open exams →</button></div><div id="historyRows"></div></section>
  </div>
  <div class="intelligence-band" id="intelligenceBand">
-  <section><div class="intel-title"><div><span class="micro-label">READINESS ENGINE</span><h3>Evidence, not vibes.</h3></div><span class="evidence-chip" id="evidenceChip">LOW EVIDENCE</span></div><div class="intel-scoreline"><strong id="intelReady">0</strong><span id="intelReadyCopy">Complete some practice and the model will calibrate.</span></div><div class="intel-meter"><i id="intelReadyBar"></i></div><div class="intel-grid"><div class="intel-mini"><span>RECENT MOCKS</span><b id="intelMocks">—</b></div><div class="intel-mini"><span>QUIZ ACCURACY</span><b id="intelQuiz">—</b></div><div class="intel-mini"><span>RECALL STABILITY</span><b id="intelRecall">0%</b></div><div class="intel-mini"><span>PBQ COVERAGE</span><b id="intelPbq">0%</b></div></div></section>
+  <section><div class="intel-title"><div><span class="micro-label">READINESS ENGINE</span><h3>Current readiness</h3></div><span class="evidence-chip" id="evidenceChip">LOW EVIDENCE</span></div><div class="intel-scoreline"><strong id="intelReady">0</strong><span id="intelReadyCopy">Complete some practice and the model will calibrate.</span></div><div class="intel-meter"><i id="intelReadyBar"></i></div><div class="intel-grid"><div class="intel-mini"><span>RECENT MOCKS</span><b id="intelMocks">—</b></div><div class="intel-mini"><span>QUIZ ACCURACY</span><b id="intelQuiz">—</b></div><div class="intel-mini"><span>RECALL STABILITY</span><b id="intelRecall">0%</b></div><div class="intel-mini"><span>PBQ COVERAGE</span><b id="intelPbq">0%</b></div></div></section>
   <section><span class="micro-label">MAIN BLOCKER</span><div class="blocker-copy" id="blockerCopy">Build enough evidence to reveal the blocker.</div><div class="blocker-detail" id="blockerDetail">The system weighs timed mocks, quiz accuracy, recall stability and PBQ completion.</div><button class="repair-cta" id="smartRepairBtn">Build a repair session →</button></section>
   <section><span class="micro-label">TARGET ZONE</span><div class="target-stack"><div class="target-row"><span>READY RANGE</span><b>80%+</b></div><div class="target-row"><span>DISTANCE</span><b id="distanceTarget">—</b></div><div class="target-row"><span>EVIDENCE</span><b id="evidenceCount">0 signals</b></div><div class="target-row"><span>LAST REPAIR</span><b id="lastRepair">—</b></div></div></section>
  </div>
 </section>
 <section class="view" id="learn">
- <div class="view-head"><div><span class="kicker">MEMORY / ACTIVE RECALL</span><h2>Flashcards, without the clutter.</h2><p>Answer in your head first. Then reveal. Your rating controls when the card comes back.</p></div><span class="mode-chip" id="learnModeTag">FILTERED DECK</span></div>
+ <div class="view-head"><div><span class="kicker">MEMORY / ACTIVE RECALL</span><h2>Flashcards, without the clutter.</h2><p>Answer in your head first. Then reveal. Your rating controls when the card comes back.</p></div><span class="mode-chip" id="learnModeTag">DECK</span></div>
  <div class="learn-layout">
   <section class="memory-stage">
    <div class="card-topline"><div class="card-meta"><span id="cardObj"></span><span id="cardTopic"></span></div><strong id="cardCount"></strong></div>
@@ -736,7 +808,7 @@ if(S.activeExam&&confirm(`Resume unfinished Mock Exam ${S.activeExam.name}?`)){s
  function pairSignals(includeZero=false){return PAIRS.map(pair=>{const a=termFriction(pair[0]),b=termFriction(pair[1]),evA=evidenceFor(pair[0]),evB=evidenceFor(pair[1]);return {pair,score:a+b,a,b,supported:(evA.cards.length+evA.qs.length>0)&&(evB.cards.length+evB.qs.length>0)}}).filter(x=>x.supported&&(includeZero||x.score>0)).sort((a,b)=>b.score-a.score)}
  function domainEvidence(){const latest=[...(S.history||[])].reverse().find(h=>h.domains);return [1,2,3,4,5].map(d=>{if(latest?.domains?.[d]!=null)return clamp(latest.domains[d]);const cards=CARDS.filter(c=>String(c.domain)===String(d));const mastered=cards.filter(c=>{const st=cardState(c.id);return st.reviews>=2&&(st.rating==='good'||st.rating==='easy')}).length;let qc=0,qt=0;QUICK.filter(q=>String(q.domain)===String(d)).forEach(q=>{const st=quickState(q.id);qc+=st.correct||0;qt+=(st.correct||0)+(st.wrong||0)});const recall=cards.length?mastered/cards.length*100:0,quiz=qt?qc/qt*100:0;return clamp(qt?recall*.55+quiz*.45:recall)})}
  function readinessModel(){const hist=(S.history||[]).slice(-3),quiz=clamp(overallAccuracy()||0),recall=clamp(masteredCards().length/CARDS.length*100),pbq=clamp(Object.values(S.pbq||{}).filter(Boolean).length/Math.max(1,PBQS.length)*100);let mock=0;if(hist.length){const w=hist.length===1?[1]:hist.length===2?[.38,.62]:[.18,.30,.52];mock=clamp(hist.reduce((a,h,i)=>a+(h.score||0)*w[i],0)/w.reduce((a,b)=>a+b,0))}const weakRate=weakCards().length/CARDS.length*100,dueRate=dueCards().length/CARDS.length*100;let score;if(hist.length)score=mock*.56+quiz*.14+recall*.18+pbq*.12;else score=quiz*.32+recall*.43+pbq*.25;score-=Math.min(7,weakRate*.18)+Math.min(5,dueRate*.035);if(!hist.length)score=Math.min(score,72);score=clamp(score);const interactions=Object.values(S.quick||{}).reduce((a,x)=>a+(x.correct||0)+(x.wrong||0),0)+Object.values(S.cards||{}).reduce((a,x)=>a+(x.reviews||0),0);const evidence=hist.length*30+Math.min(35,interactions)+Object.values(S.pbq||{}).filter(Boolean).length*5;const confidence=hist.length>=3&&interactions>=40?'HIGH EVIDENCE':hist.length||interactions>=15?'MEDIUM EVIDENCE':'LOW EVIDENCE';const domains=domainEvidence(),low=Math.min(...domains),blocker=domains.indexOf(low)+1;return {score,mock,quiz,recall,pbq,evidence,confidence,domains,blocker,low}}
- function renderIntelligence(){const m=readinessModel();if($i('intelReady'))$i('intelReady').textContent=m.score;if($i('intelReadyBar'))$i('intelReadyBar').style.width=m.score+'%';if($i('evidenceChip'))$i('evidenceChip').textContent=m.confidence;if($i('intelMocks'))$i('intelMocks').textContent=(S.history||[]).length?m.mock+'%':'—';if($i('intelQuiz'))$i('intelQuiz').textContent=overallAccuracy()==null?'—':m.quiz+'%';if($i('intelRecall'))$i('intelRecall').textContent=m.recall+'%';if($i('intelPbq'))$i('intelPbq').textContent=m.pbq+'%';if($i('distanceTarget'))$i('distanceTarget').textContent=m.score>=80?'IN RANGE':`+${80-m.score} pts`;if($i('evidenceCount'))$i('evidenceCount').textContent=`${m.evidence} signals`;const hist=readRepairHistory(),last=hist[hist.length-1];if($i('lastRepair'))$i('lastRepair').textContent=last?`${last.accuracy}% · D${last.domain||'?'}`:'—';if($i('intelReadyCopy'))$i('intelReadyCopy').textContent=m.confidence==='LOW EVIDENCE'?'Take a timed mock when you are ready; until then the model stays conservative.':m.score>=80?'You are inside the practice target zone. Protect consistency, not one lucky score.':`The model sees ${80-m.score} readiness points between you and the target zone.`;if($i('blockerCopy'))$i('blockerCopy').textContent=`Domain ${m.blocker} is the current drag.`;if($i('blockerDetail'))$i('blockerDetail').textContent=m.low?`Current Domain ${m.blocker} signal: ${m.low}%. The repair builder will bias cards and questions toward the highest-friction objective inside this area.`:`There is not enough evidence inside Domain ${m.blocker} yet, so the repair builder will create a short baseline session.`;updateBaseFelix(m);renderContrastPairs()}
+ function renderIntelligence(){const m=readinessModel();if($i('intelReady'))$i('intelReady').textContent=m.score;if($i('intelReadyBar'))$i('intelReadyBar').style.width=m.score+'%';if($i('evidenceChip'))$i('evidenceChip').textContent=m.confidence;if($i('intelMocks'))$i('intelMocks').textContent=(S.history||[]).length?m.mock+'%':'—';if($i('intelQuiz'))$i('intelQuiz').textContent=overallAccuracy()==null?'—':m.quiz+'%';if($i('intelRecall'))$i('intelRecall').textContent=m.recall+'%';if($i('intelPbq'))$i('intelPbq').textContent=m.pbq+'%';if($i('distanceTarget'))$i('distanceTarget').textContent=m.score>=80?'IN RANGE':`+${80-m.score} pts`;if($i('evidenceCount'))$i('evidenceCount').textContent=`${m.evidence} signals`;const hist=readRepairHistory(),last=hist[hist.length-1];if($i('lastRepair'))$i('lastRepair').textContent=last?`${last.accuracy}% · D${last.domain||'?'}`:'—';if($i('intelReadyCopy'))$i('intelReadyCopy').textContent=m.confidence==='LOW EVIDENCE'?'Take a timed mock when you are ready; until then the model stays conservative.':m.score>=80?'You are inside the practice target zone. Protect consistency, not one lucky score.':`The model sees ${80-m.score} readiness points between you and the target zone.`;if($i('blockerCopy'))$i('blockerCopy').textContent=`Domain ${m.blocker} is the current drag.`;if($i('blockerDetail'))$i('blockerDetail').textContent=m.low?`Current Domain ${m.blocker} signal: ${m.low}%. The repair builder will bias cards and questions toward the highest-friction objective inside this area.`:`There is not enough evidence inside Domain ${m.blocker} yet, so the repair builder will create a short baseline session.`;deriveFelixState();renderContrastPairs()}
  function renderContrastPairs(){const el=$i('contrastPairs');if(!el)return;let rows=pairSignals(false);let starter=false;if(!rows.length){rows=pairSignals(true).slice(0,3);starter=true}else rows=rows.slice(0,4);el.innerHTML=rows.length?rows.map((x,idx)=>`<div class="contrast-row"><div class="contrast-terms"><span>${starter?'STARTER':x.score+' FRICTION'}</span><b>${esc(x.pair[0])}<br>↔ ${esc(x.pair[1])}</b></div><div class="contrast-copy"><p><strong>${esc(x.pair[0])}</strong><br>${esc(conceptSnippet(x.pair[0]))}</p><p><strong>${esc(x.pair[1])}</strong><br>${esc(conceptSnippet(x.pair[1]))}</p></div><button data-contrast-index="${idx}" title="Build repair around this contrast">→</button></div>`).join(''):'<p class="blocker-detail">No supported contrast pairs found in this bank.</p>';el.querySelectorAll('[data-contrast-index]').forEach((b,i)=>b.onclick=()=>openRepair(rows[i].pair))}
  function topTarget(pair=null){if(pair){for(const term of pair){const e=evidenceFor(term),c=e.cards[0],q=e.qs[0];if(c)return {obj:c.obj,topic:c.topic,domain:c.domain,label:`${c.obj} · ${c.topic}`};if(q)return {obj:q.obj,topic:q.topic,domain:q.domain,label:`${q.obj} · ${q.topic}`}}}const c=confusionData()[0];if(c){const [obj,...rest]=c[0].split(' · ');return {obj:obj.trim(),topic:rest.join(' · ').trim(),domain:obj.trim()[0],label:c[0]}}const m=readinessModel(),d=String(m.blocker),q=QUICK.find(x=>String(x.domain)===d),card=CARDS.find(x=>String(x.domain)===d);const x=q||card;return {obj:x?.obj||d+'.1',topic:x?.topic||`Domain ${d}`,domain:d,label:x?`${x.obj} · ${x.topic}`:`Domain ${d}`}}
  function buildPlan(pair=null){const t=topTarget(pair),sameObj=c=>c.obj===t.obj,sameDomain=c=>String(c.domain)===String(t.domain);let cards=CARDS.filter(sameObj).sort((a,b)=>(cardState(b.id).lapses||0)-(cardState(a.id).lapses||0));if(cards.length<8)cards=[...cards,...CARDS.filter(c=>sameDomain(c)&&!cards.includes(c))];cards=cards.slice(0,8);let qs=QUICK.filter(sameObj).sort((a,b)=>(quickState(b.id).wrong||0)-(quickState(a.id).wrong||0));if(qs.length<5)qs=[...qs,...QUICK.filter(q=>sameDomain(q)&&!qs.includes(q))];qs=qs.slice(0,5);if(!cards.length)cards=chooseDailyCards().slice(0,8);if(!qs.length)qs=chooseDailyQuiz().slice(0,5);return {...t,pair,cards,qs}}
