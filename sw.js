@@ -1,4 +1,4 @@
-const CACHE='seans-security-lab-maxed-dark-reveal-v1';
+const CACHE='seans-security-lab-maxed-mobile-reveal-v2';
 const CORE=['./','./index.html','./manifest.webmanifest','./app-icon.svg'];
 self.addEventListener('install',event=>{
   event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(CORE)));

@@ -596,6 +596,29 @@ body.dark .card-action-row .reveal:hover{
   -webkit-text-fill-color:#fffdf7!important;
 }
 </style>
+
+<style id="mobile-reveal-stability-fix">
+/* Mobile-only stability fix: no answer bounce or scroll anchoring on reveal. */
+@media(max-width:760px){
+  .memory-stage,
+  .card-answer,
+  .card-footer,
+  .card-action-row,
+  .quick-ratings{
+    overflow-anchor:none!important;
+  }
+  .card-answer{
+    transition:none!important;
+    animation:none!important;
+    will-change:auto!important;
+  }
+  .card-answer.show{
+    transform:none!important;
+    animation:none!important;
+    transition:none!important;
+  }
+}
+</style>
 </head><body>
 <header class="studio-header">
  <div class="brand-wrap"><div class="brand-mark"><div><b>SEAN'S SECURITY+ LAB</b><small>SY0-701 / STUDY SYSTEM</small></div></div></div>
@@ -826,7 +849,7 @@ function renderToday(){const due=dueCards().length,weak=weakCards().length,conf=
 function renderHistory(){const rows=S.history.slice(-6).reverse();$('historyRows').innerHTML=rows.length?rows.map(h=>`<div class="history-row"><span>${esc(h.name)} · ${esc(h.date)}</span><b>${h.score}%</b><span>${h.score>=80?'STRONG':'REVIEW'}</span></div>`).join(''):'<div class="history-row"><span>No mock attempts yet.</span><b>—</b><span></span></div>'}
 
 function renderCard(){if(!cardDeck.length)return;const c=cardDeck[cardIndex%cardDeck.length],s=cardState(c.id);$('learnModeTag').textContent=learnMode;$('cardObj').textContent=c.obj;$('cardTopic').textContent=c.topic;$('cardCount').textContent=`${cardIndex+1}/${cardDeck.length}`;$('cardQ').textContent=c.q;$('cardAnswer').textContent=c.a;$('cardWhy').textContent=c.why;$('cardA').classList.remove('show');$('revealBtn').textContent='Reveal answer [Space]';$('cardBar').style.width=((cardIndex+1)/cardDeck.length*100)+'%';$('inkTip').textContent=s.rating?`Last rating: ${s.rating.toUpperCase()}. ${c.why}`:'Try it cold. '+c.why}
-function revealCard(){const a=$('cardA'),show=!a.classList.contains('show');a.classList.toggle('show',show);$('revealBtn').textContent=show?'Hide answer [Space]':'Reveal answer [Space]';if(show)$('inkTip').textContent='EXAM CUE: '+(cardDeck[cardIndex%cardDeck.length].why||'Know the distinction, not just the word.')}
+function revealCard(){const a=$('cardA'),show=!a.classList.contains('show'),mobile=window.matchMedia('(max-width:760px)').matches,y=mobile?window.scrollY:0,root=document.documentElement,prevScrollBehavior=root.style.scrollBehavior;if(mobile)root.style.scrollBehavior='auto';a.classList.toggle('show',show);$('revealBtn').textContent=show?'Hide answer [Space]':'Reveal answer [Space]';if(show)$('inkTip').textContent='EXAM CUE: '+(cardDeck[cardIndex%cardDeck.length].why||'Know the distinction, not just the word.');if(mobile){window.scrollTo(0,y);requestAnimationFrame(()=>{window.scrollTo(0,y);requestAnimationFrame(()=>{window.scrollTo(0,y);root.style.scrollBehavior=prevScrollBehavior})})}}
 function rateCard(r){const c=cardDeck[cardIndex%cardDeck.length],s=cardState(c.id),now=Date.now();s.reviews=(s.reviews||0)+1;if(r==='again'){s.lapses=(s.lapses||0)+1;s.interval=0;s.due=now+10*60*1000}else if(r==='hard'){s.interval=Math.max(1,Math.round((s.interval||0)*1.25)||1);s.due=now+s.interval*DAY}else if(r==='good'){s.interval=s.interval?Math.max(2,Math.round(s.interval*2.1)):3;s.due=now+s.interval*DAY}else{s.interval=s.interval?Math.max(5,Math.round(s.interval*2.7)):7;s.due=now+s.interval*DAY}s.rating=r;touchActivity();save();renderStats();cardIndex=(cardIndex+1)%cardDeck.length;renderCard()}
 $('revealBtn').onclick=revealCard;document.querySelectorAll('[data-rate]').forEach(b=>b.onclick=()=>rateCard(b.dataset.rate));$('nextCardBtn').onclick=()=>rateCard('again');
 
