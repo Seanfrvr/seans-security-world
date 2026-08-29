@@ -1,0 +1,26 @@
+{
+  "name": "seans-sec-lab",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Sean's Sec Lab — CompTIA Security+ SY0-701 study app",
+  "scripts": {
+    "cap:add:android": "npx cap add android",
+    "cap:add:ios": "npx cap add ios",
+    "cap:sync": "npx cap sync",
+    "assets": "npx @capacitor/assets generate --iconBackgroundColor '#0e1532' --iconBackgroundColorDark '#060914' --splashBackgroundColor '#0e1532' --splashBackgroundColorDark '#060914'",
+    "android:debug": "cd android && ./gradlew assembleDebug",
+    "android:release": "cd android && ./gradlew bundleRelease"
+  },
+  "dependencies": {
+    "@capacitor/core": "8.5.0"
+  },
+  "devDependencies": {
+    "@capacitor/android": "8.5.0",
+    "@capacitor/ios": "8.5.0",
+    "@capacitor/cli": "8.5.0",
+    "@capacitor/assets": "3.0.5"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  }
+}
