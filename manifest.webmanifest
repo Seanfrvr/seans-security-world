@@ -1,12 +1,12 @@
 {
   "name": "Sean's Security+ Lab",
   "short_name": "Security+ Lab",
-  "description": "Local-first SY0-701 study system",
+  "description": "Local-first SY0-701 boss training study system",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#f2ead8",
-  "theme_color": "#171513",
+  "background_color": "#edf2ff",
+  "theme_color": "#111b3c",
   "icons": [
     {
       "src": "app-icon.svg",
