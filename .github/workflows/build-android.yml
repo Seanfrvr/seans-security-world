@@ -30,6 +30,21 @@ jobs:
       - name: Set up Android SDK
         uses: android-actions/setup-android@v3
 
+      - name: Bundle current tested web app
+        run: |
+          curl --fail --location --retry 3 --output native-app/www/index.html https://seanfrvr.github.io/seans-security-world/
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('native-app/www/index.html')
+          text=p.read_text()
+          text=text.replace("<title>Sean's Security+ Lab</title>","<title>Sean's Sec Lab</title>",1)
+          text=text.replace("SEAN'S SECURITY+ LAB","SEAN'S SEC LAB")
+          text=text.replace("Sean's Security+ Lab","Sean's Sec Lab")
+          text=text.replace('<meta name="theme-color" content="#f2ead8">','<meta name="theme-color" content="#111b3c"><meta name="application-name" content="Sean\'s Sec Lab"><meta name="apple-mobile-web-app-title" content="Sean\'s Sec Lab">',1)
+          p.write_text(text)
+          print('Bundled',len(text),'characters')
+          PY
+
       - name: Install dependencies
         working-directory: native-app
         run: npm install --no-audit --no-fund
