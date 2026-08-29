@@ -41,6 +41,11 @@ jobs:
           text=text.replace("SEAN'S SECURITY+ LAB","SEAN'S SEC LAB")
           text=text.replace("Sean's Security+ Lab","Sean's Sec Lab")
           text=text.replace('<meta name="theme-color" content="#f2ead8">','<meta name="theme-color" content="#111b3c"><meta name="application-name" content="Sean\'s Sec Lab"><meta name="apple-mobile-web-app-title" content="Sean\'s Sec Lab">',1)
+          old="""const standalone=window.matchMedia?.('(display-mode: standalone)').matches||window.navigator.standalone===true;if(standalone){installTitle.textContent='Installed';installStatus.textContent='Running as a standalone study app.';installBtn.hidden=true}else if(location.protocol==='file:'){installStatus.textContent='This local HTML works normally. Install/offline mode activates after the companion files are hosted.'}\n window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();installPrompt=e;installBtn.disabled=false;installStatus.textContent='Your browser is ready to install this study lab.'});\n installBtn.onclick=async()=>{if(!installPrompt)return;installPrompt.prompt();await installPrompt.userChoice;installPrompt=null;installBtn.disabled=true};\n if('serviceWorker' in navigator&&/^https?:$/.test(location.protocol)){navigator.serviceWorker.register('./sw.js').then(()=>{if(!installPrompt&&!standalone)installStatus.textContent='Offline support is active. Browser install availability depends on platform.'}).catch(()=>{})}"""
+          new="""const nativeShell=!!window.Capacitor?.isNativePlatform?.();\n const standalone=window.matchMedia?.('(display-mode: standalone)').matches||window.navigator.standalone===true||nativeShell;if(nativeShell){installTitle.textContent=\"Sean's Sec Lab\";installStatus.textContent='Native app installed. Progress stays on this device unless you export it.';installBtn.hidden=true}else if(standalone){installTitle.textContent='Installed';installStatus.textContent='Running as a standalone study app.';installBtn.hidden=true}else if(location.protocol==='file:'){installStatus.textContent='This local HTML works normally. Install/offline mode activates after the companion files are hosted.'}\n window.addEventListener('beforeinstallprompt',e=>{if(nativeShell)return;e.preventDefault();installPrompt=e;installBtn.disabled=false;installStatus.textContent='Your browser is ready to install this study lab.'});\n installBtn.onclick=async()=>{if(nativeShell||!installPrompt)return;installPrompt.prompt();await installPrompt.userChoice;installPrompt=null;installBtn.disabled=true};\n if(!nativeShell&&'serviceWorker' in navigator&&/^https?:$/.test(location.protocol)){navigator.serviceWorker.register('./sw.js').then(()=>{if(!installPrompt&&!standalone)installStatus.textContent='Offline support is active. Browser install availability depends on platform.'}).catch(()=>{})}"""
+          if old not in text:
+              raise SystemExit('Native install patch target not found')
+          text=text.replace(old,new,1)
           p.write_text(text)
           print('Bundled',len(text),'characters')
           PY
@@ -52,6 +57,10 @@ jobs:
       - name: Create Android project
         working-directory: native-app
         run: npx cap add android
+
+      - name: Generate branded Android assets
+        working-directory: native-app
+        run: npx @capacitor/assets generate --android --iconBackgroundColor '#0e1532' --iconBackgroundColorDark '#060914' --splashBackgroundColor '#0e1532' --splashBackgroundColorDark '#060914'
 
       - name: Sync web app
         working-directory: native-app
